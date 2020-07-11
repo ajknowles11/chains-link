@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "lettas.chains_link.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinChainBlock",
+    "MixinLanternBlock",
+    "MixinPistonHandler",
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
