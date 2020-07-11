@@ -6,7 +6,7 @@
   "mixins": [
     "MixinChainBlock",
     "MixinLanternBlock",
-    "MixinPistonHandler",
+    "MixinPistonHandler"
   ],
   "client": [],
   "server": [],
