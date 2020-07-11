@@ -41,7 +41,7 @@ public abstract class MixinPistonHandler {
             return false;
         } else if (block == Blocks.CHAIN && (block2 != Blocks.SLIME_BLOCK && block2 != Blocks.HONEY_BLOCK) && blocks.get(Properties.AXIS) != dir.getAxis()) {
             return false;
-        } else if (block2 == Blocks.CHAIN && (block != Blocks.SLIME_BLOCK && block != Blocks.HONEY_BLOCK) && block2s.get(Properties.AXIS) != dir.getAxis()) {
+        } else if (block2 == Blocks.CHAIN && block2s.get(Properties.AXIS) != dir.getAxis()) {
             return false;
         } else {
             return isBlockSticky(block) || isBlockSticky(block2);
