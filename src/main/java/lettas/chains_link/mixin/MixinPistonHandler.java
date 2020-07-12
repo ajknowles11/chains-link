@@ -41,9 +41,9 @@ public abstract class MixinPistonHandler {
             return false;
         } else if (block == Blocks.SLIME_BLOCK && block2 == Blocks.HONEY_BLOCK) {
             return false;
-        } else if (block == Blocks.CHAIN && (block2 != Blocks.SLIME_BLOCK && block2 != Blocks.HONEY_BLOCK) && blocks.get(Properties.AXIS) != dir.getAxis()) {
+        } else if (block == Blocks.CHAIN && blocks.get(Properties.AXIS) != dir.getAxis()) {
             return false;
-        } else if (block2 == Blocks.CHAIN && block2s.get(Properties.AXIS) != dir.getAxis()) {
+        } else if (block2 == Blocks.CHAIN && (block != Blocks.SLIME_BLOCK && block != Blocks.HONEY_BLOCK) && block2s.get(Properties.AXIS) != dir.getAxis()) {
             return false;
         } else {
             return isBlockSticky(block) || isBlockSticky(block2);
@@ -157,7 +157,7 @@ public abstract class MixinPistonHandler {
             if (direction.getAxis() != this.motionDirection.getAxis()) {
                 BlockPos blockPos = pos.offset(direction);
                 BlockState blockState2 = this.world.getBlockState(blockPos);
-                if (isAdjacentBlockStuck(blockState2, blockState, direction) && !this.tryMove(blockPos, direction)) {
+                if (isAdjacentBlockStuck(blockState, blockState2, direction) && !this.tryMove(blockPos, direction)) {
                     return false;
                 }
             }
