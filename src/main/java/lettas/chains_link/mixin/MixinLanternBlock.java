@@ -1,5 +1,6 @@
 package lettas.chains_link.mixin;
 
+import lettas.chains_link.chains;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.piston.PistonBehavior;
@@ -65,6 +66,8 @@ public class MixinLanternBlock extends Block implements Waterloggable {
 
     @Overwrite
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        if (!chains.isLanternGravity)
+            return true;
         Direction direction = attachedDirection(state).getOpposite();
         return Block.sideCoversSmallSquare(world, pos.offset(direction), direction.getOpposite());
     }
