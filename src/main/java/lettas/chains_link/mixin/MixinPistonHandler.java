@@ -15,6 +15,8 @@ import net.minecraft.block.piston.*;
 
 import java.util.List;
 
+import static lettas.chains_link.chains.pushLimit;
+
 @Mixin(PistonHandler.class)
 public abstract class MixinPistonHandler {
     @Shadow @Final
@@ -62,7 +64,7 @@ public abstract class MixinPistonHandler {
             return true;
         } else {
             int i = 1;
-            if (i + this.movedBlocks.size() > 12) {
+            if (i + this.movedBlocks.size() > pushLimit) {
                 return false;
             } else {
                 while (isBlockSticky(block)) {
@@ -75,7 +77,7 @@ public abstract class MixinPistonHandler {
                     }
 
                     ++i;
-                    if (i + this.movedBlocks.size() > 12) {
+                    if (i + this.movedBlocks.size() > pushLimit) {
                         return false;
                     }
                 }
@@ -120,7 +122,7 @@ public abstract class MixinPistonHandler {
                         return true;
                     }
 
-                    if (this.movedBlocks.size() >= 12) {
+                    if (this.movedBlocks.size() >= pushLimit) {
                         return false;
                     }
 
