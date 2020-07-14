@@ -1,6 +1,5 @@
 package lettas.chains_link.mixin;
 
-import lettas.chains_link.chains;
 import net.minecraft.block.*;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.piston.PistonBehavior;
@@ -13,22 +12,28 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import lettas.chains_link.chains;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LanternBlock.class)
-public class MixinLanternBlock extends Block implements Waterloggable {
-    private static final BooleanProperty HANGING;
+public class clMixinLanternBlock extends Block implements Waterloggable {
+    @Shadow public static final BooleanProperty HANGING;
     private static final BooleanProperty WATERLOGGED;
 
-    public MixinLanternBlock(Settings settings) {
+    public clMixinLanternBlock(Settings settings) {
         super(settings);
-        this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(HANGING, false).with(WATERLOGGED, false));
+    }
+
+    @Inject(method = "<init>*", at = @At("TAIL"))
+    public void clMixinLanternBlock(AbstractBlock.Settings settings, CallbackInfo ci) {
+        this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(WATERLOGGED, false).with(HANGING, false));
     }
 
     @Overwrite
@@ -41,7 +46,7 @@ public class MixinLanternBlock extends Block implements Waterloggable {
         for(int var4 = 0; var4 < var3; ++var4) {
             Direction direction = var2[var4];
             if (direction.getAxis() == Direction.Axis.Y) {
-                BlockState blockState = (BlockState)this.getDefaultState().with(HANGING, direction == Direction.UP).with(WATERLOGGED, bl);
+                BlockState blockState = (BlockState)this.getDefaultState().with(WATERLOGGED, bl).with(HANGING, direction == Direction.UP);
                 if (blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) {
                     return blockState;
                 }
@@ -83,9 +88,10 @@ public class MixinLanternBlock extends Block implements Waterloggable {
     @Overwrite
     public void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(new Property[]{HANGING});
-        builder.add(WATERLOGGED);
+        builder.add(new Property[]{WATERLOGGED});
     }
 
+    @Override
     public FluidState getFluidState(BlockState state) {
         return (Boolean)state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
     }
