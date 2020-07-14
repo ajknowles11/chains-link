@@ -8,7 +8,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
@@ -17,6 +16,9 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = ChainBlock.class, priority = 420)
 public abstract class clMixinChainBlock extends Block implements Waterloggable {
@@ -26,11 +28,13 @@ public abstract class clMixinChainBlock extends Block implements Waterloggable {
 	private static final EnumProperty<Direction.Axis> AXIS;
 	private static final BooleanProperty WATERLOGGED;
 	
-	public clMixinChainBlock(Block.Settings settings) {
-		super(settings);
+	public clMixinChainBlock(Block.Settings settings) {super(settings); }
+
+	@Inject(method = "<init>*", at = @At("TAIL"))
+	public void clMixinChainBlock(Block.Settings settings, CallbackInfo ci) {
 		this.setDefaultState((BlockState)((BlockState)this.stateManager.getDefaultState()).with(AXIS, Direction.Axis.Y).with(WATERLOGGED, false));
 	}
-	
+
 	@Overwrite 
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		switch((Direction.Axis)state.get(AXIS)) { 
