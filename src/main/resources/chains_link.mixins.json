@@ -4,7 +4,6 @@
   "package": "lettas.chains_link.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "clMixinChainBlock",
     "clMixinLanternBlock",
     "clMixinPistonHandler"
   ],
