@@ -30,7 +30,7 @@ public abstract class clMixinPistonHandler {
         return isBlockSticky(block);
     }
 
-    @Inject(method="isBlockSticky", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "isBlockSticky", at = @At(value = "HEAD"), cancellable = true)
     private static void claddChainsSticky(Block block, CallbackInfoReturnable<Boolean> cir){
         if(block == Blocks.CHAIN) {
             cir.setReturnValue(true);
