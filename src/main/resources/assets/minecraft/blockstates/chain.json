@@ -1,16 +1,229 @@
 {
-  "variants": {
-    "axis=x": {
-      "model": "block/chain",
-      "x": 90,
-      "y": 90
+  "multipart": [
+    {
+      "when": {
+        "axis": "y"
+      },
+      "apply": {
+      "model": "block/chain_center"
+      }
     },
-    "axis=y": {
-      "model": "block/chain"
+    {
+      "when": {
+        "axis": "x"
+      },
+      "apply": {
+        "model": "block/chain_center",
+        "x": 90,
+        "y": 90
+      }
     },
-    "axis=z": {
-      "model": "block/chain",
-      "x": 90
+    {
+      "when": {
+        "axis": "z"
+      },
+      "apply": {
+        "model": "block/chain_center",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "edit_down": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_one",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "y",
+        "edit_down": "false"
+      },
+      "apply": {
+        "model": "block/chain_side_one",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "edit_down": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_one",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "edit_up": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_two",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "y",
+        "edit_up": "false"
+      },
+      "apply": {
+        "model": "block/chain_side_two",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "edit_up": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_two",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "edit_north": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_two",
+        "x": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "y",
+        "edit_north": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_two",
+        "x": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "edit_north": "false"
+      },
+      "apply": {
+        "model": "block/chain_side_two",
+        "x": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "edit_south": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_one",
+        "x": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "y",
+        "edit_south": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_one",
+        "x": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "edit_south": "false"
+      },
+      "apply": {
+        "model": "block/chain_side_one",
+        "x": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "edit_west": "false"
+      },
+      "apply": {
+        "model": "block/chain_side_one",
+        "x": 90,
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "y",
+        "edit_west": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_one",
+        "x": 90,
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "edit_west": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_one",
+        "x": 90,
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "x",
+        "edit_east": "false"
+      },
+      "apply": {
+        "model": "block/chain_side_two",
+        "x": 90,
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "y",
+        "edit_east": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_two",
+        "x": 90,
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "axis": "z",
+        "edit_east": "true"
+      },
+      "apply": {
+        "model": "block/chain_side_two",
+        "x": 90,
+        "y": 90,
+        "uvlock": false
+      }
     }
-  }
+  ]
 }
