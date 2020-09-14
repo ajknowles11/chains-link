@@ -10,6 +10,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -32,8 +33,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 @Mixin(value = ChainBlock.class, priority = 420)
-public abstract class clMixinChainBlock extends PillarBlock implements Waterloggable {
+public abstract class clMixinChainBlock extends Block implements Waterloggable {
     private static final BooleanProperty WATERLOGGED;
+    private static final EnumProperty AXIS;
     private static final BooleanProperty EDIT_DOWN;
     private static final BooleanProperty EDIT_UP;
     private static final BooleanProperty EDIT_NORTH;
@@ -200,6 +202,7 @@ public abstract class clMixinChainBlock extends PillarBlock implements Waterlogg
 
     static {
         WATERLOGGED = Properties.WATERLOGGED;
+        AXIS = Properties.AXIS;
         EDIT_DOWN = chains.EDIT_DOWN;
         EDIT_UP = chains.EDIT_UP;
         EDIT_NORTH = chains.EDIT_NORTH;
