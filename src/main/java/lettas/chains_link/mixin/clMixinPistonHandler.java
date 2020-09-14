@@ -1,6 +1,7 @@
 package lettas.chains_link.mixin;
 
 import com.google.common.collect.Lists;
+import lettas.chains_link.chains;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -38,16 +39,43 @@ public abstract class clMixinPistonHandler {
         }
     }
 
-    private static boolean isAdjacentBlockStuck(BlockState blocks, BlockState block2s, Direction dir) {
+    private boolean canChain(BlockState blocks, Direction dir, boolean isOneChain) {
+        if (isOneChain) {
+            if (dir == this.motionDirection)
+                dir = dir.getOpposite();
+        }
+        switch(dir) {
+            case UP:
+                return blocks.get(chains.EDIT_UP) != (blocks.get(Properties.AXIS) == Direction.Axis.Y);
+            case DOWN:
+                return blocks.get(chains.EDIT_DOWN) != (blocks.get(Properties.AXIS) == Direction.Axis.Y);
+            case NORTH:
+                return blocks.get(chains.EDIT_NORTH) != (blocks.get(Properties.AXIS) == Direction.Axis.Z);
+            case SOUTH:
+                return blocks.get(chains.EDIT_SOUTH) != (blocks.get(Properties.AXIS) == Direction.Axis.Z);
+            case WEST:
+                return blocks.get(chains.EDIT_WEST) != (blocks.get(Properties.AXIS) == Direction.Axis.X);
+            case EAST:
+                return blocks.get(chains.EDIT_EAST) != (blocks.get(Properties.AXIS) == Direction.Axis.X);
+        }
+        return false;
+    }
+
+    private boolean isAdjacentBlockStuck(BlockState blocks, BlockState block2s, Direction dir) {
         Block block = blocks.getBlock();
         Block block2 = block2s.getBlock();
+        if (block == Blocks.CHAIN && block2 == Blocks.CHAIN && dir.getAxis() == motionDirection.getAxis()) {
+            if (canChain(blocks, motionDirection.getOpposite(), false) && canChain(block2s, motionDirection, false))
+                return true;
+            else return false;
+        }
         if (block == Blocks.HONEY_BLOCK && block2 == Blocks.SLIME_BLOCK) {
             return false;
         } else if (block == Blocks.SLIME_BLOCK && block2 == Blocks.HONEY_BLOCK) {
             return false;
-        } else if (block == Blocks.CHAIN && blocks.get(Properties.AXIS) != dir.getAxis()) {
+        } else if (block == Blocks.CHAIN && !canChain(blocks, dir, true)) {
             return false;
-        } else if (block2 == Blocks.CHAIN && (block != Blocks.SLIME_BLOCK && block != Blocks.HONEY_BLOCK) && block2s.get(Properties.AXIS) != dir.getAxis()) {
+        } else if (block2 == Blocks.CHAIN && (block != Blocks.SLIME_BLOCK && block != Blocks.HONEY_BLOCK) && !canChain(block2s, dir.getOpposite(), true)) {
             return false;
         } else {
             return isBlockSticky(block) || isBlockSticky(block2);
